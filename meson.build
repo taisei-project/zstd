@@ -12,12 +12,21 @@ project('zstd',
   ['c', 'cpp'],
   license: ['BSD', 'GPLv2'],
   default_options : [
-    'c_std=gnu99',
+    # There shouldn't be any need to force a C standard convention for zstd
+    # but in case one would want that anyway, this can be done here.
+    # 'c_std=gnu99',
+    # c++11 standard is useful for pzstd
     'cpp_std=c++11',
-    'buildtype=release'
+    'buildtype=release',
+    'warning_level=3',
+    # -Wdocumentation does not actually pass, nor do the test binaries,
+    # so this isn't safe
+    #'werror=true'
   ],
-  version: 'DUMMY',
-  meson_version: '>=0.47.0')
+  version: run_command(
+    find_program('build/meson/GetZstdLibraryVersion.py', native : true),
+    join_paths(meson.current_source_dir(), 'lib/zstd.h')
+  ).stdout().strip(),
+  meson_version: '>=0.50.0')
 
 subdir('build/meson')
-
