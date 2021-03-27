@@ -34,3 +34,10 @@ option('lzma', type: 'feature', value: 'auto',
   description: 'Enable lzma support')
 option('lz4', type: 'feature', value: 'auto',
   description: 'Enable lz4 support')
+
+option('install_headers', type: 'boolean', value: true,
+  description: 'Install header files')
+option('install_libraries', type: 'boolean', value: true,
+  description: 'Install libraries')
+option('install_pkgconfig', type: 'boolean', value: true,
+  description: 'Install pkgconfig file')

@@ -114,19 +114,23 @@ libzstd = library('zstd',
   include_directories: libzstd_includes,
   c_args: libzstd_c_args,
   dependencies: libzstd_deps,
-  install: true,
+  install: get_option('install_libraries'),
   version: zstd_libversion)
 
 libzstd_dep = declare_dependency(link_with: libzstd,
   include_directories: libzstd_includes)
 
+if get_option('install_pkgconfig')
 pkgconfig.generate(libzstd,
   name: 'libzstd',
   filebase: 'libzstd',
   description: 'fast lossless compression algorithm library',
   version: zstd_libversion,
   url: 'http://www.zstd.net/')
+endif
 
+if get_option('install_headers')
 install_headers(join_paths(zstd_rootdir, 'lib/zstd.h'),
   join_paths(zstd_rootdir, 'lib/dictBuilder/zdict.h'),
   join_paths(zstd_rootdir, 'lib/common/zstd_errors.h'))
+endif
