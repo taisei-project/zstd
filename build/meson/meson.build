@@ -8,17 +8,6 @@
 # in the COPYING file in the root directory of this source tree).
 # #############################################################################
 
-project('zstd',
-  ['c', 'cpp'],
-  license: ['BSD', 'GPLv2'],
-  default_options : [
-    'c_std=gnu99',
-    'cpp_std=c++11',
-    'buildtype=release'
-  ],
-  version: 'DUMMY',
-  meson_version: '>=0.47.0')
-
 cc = meson.get_compiler('c')
 cxx = meson.get_compiler('cpp')
 pkgconfig = import('pkgconfig')
@@ -37,16 +26,6 @@ compiler_clang = 'clang'
 compiler_msvc = 'msvc'
 
 zstd_version = meson.project_version()
-
-zstd_h_file = join_paths(meson.current_source_dir(), '../../lib/zstd.h')
-GetZstdLibraryVersion_py = find_program('GetZstdLibraryVersion.py', native : true)
-r = run_command(GetZstdLibraryVersion_py, zstd_h_file)
-if r.returncode() == 0
-  zstd_version = r.stdout().strip()
-  message('Project version is now: @0@'.format(zstd_version))
-else
-  error('Cannot find project version in @0@'.format(zstd_h_file))
-endif
 
 zstd_libversion = zstd_version
 

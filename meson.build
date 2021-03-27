@@ -16,8 +16,11 @@ project('zstd',
     'cpp_std=c++11',
     'buildtype=release'
   ],
-  version: 'DUMMY',
+  version: run_command(
+    find_program('build/meson/GetZstdLibraryVersion.py', native : true),
+    join_paths(meson.current_source_dir(), 'lib/zstd.h')
+  ).stdout().strip(),
   meson_version: '>=0.47.0')
 
-subdir('build/meson')
 
+subdir('build/meson')
