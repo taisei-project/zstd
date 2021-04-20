@@ -120,6 +120,10 @@ libzstd = library('zstd',
 libzstd_dep = declare_dependency(link_with: libzstd,
   include_directories: libzstd_includes)
 
+if meson.version().version_compare('>=0.54.0')
+  meson.override_dependency('libzstd', libzstd_dep)
+endif
+
 if get_option('install_pkgconfig')
 pkgconfig.generate(libzstd,
   name: 'libzstd',
